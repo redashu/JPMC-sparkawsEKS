@@ -269,6 +269,26 @@ WARN[0000] /home/ashu/ashu-java-spark/ashu-pythoncode/compose.yaml: `version` is
 ashuc123  | Hello ALL from JPMC HyD 
 ```
 
+### hello.java
+
+```
+class hello { 
+    public static void main(String args[]) 
+    { 
+        // test expression 
+        while (true) { 
+            System.out.println("Hello World"); 
+            try {
+                Thread.sleep(2000);
+            } catch (Exception ex) {
+                // Ignored
+            }
+  
+            // update expression 
+        } 
+    } 
+} 
+```
 
 
 
