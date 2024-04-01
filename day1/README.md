@@ -184,8 +184,91 @@ Oh now i m python Developer
 
 ```
 
-### compose intro 
+### compose by Docker 
 
 <img src="com1.png">
+
+
+
+### compose intro 
+
+<img src="com2.png">
+
+### compose.yaml 
+
+```
+version:  "3.8"
+services: 
+  ashupycode: 
+    image: ashupython:v1 # name of docker image to build
+    build: .  # location of Dockerfile 
+    container_name: ashuc123 # name of container 
+    tty: true # giving interactive terminal option
+```
+
+### to run 
+
+```
+[ashu@ip-172-31-95-164 ashu-java-spark]$ ls
+javacode  pythoncode  sparkcode
+[ashu@ip-172-31-95-164 ashu-java-spark]$ cd  pythoncode/
+[ashu@ip-172-31-95-164 pythoncode]$ ls
+compose.yaml  Dockerfile  hello.py  ok.py
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  up -d  
+WARN[0000] /home/ashu/ashu-java-spark/pythoncode/compose.yaml: `version` is obsolete 
+[+] Running 1/0
+ ! ashupycode Warning                                                                                             0.1s 
+[+] Building 2.3s (8/8) FINISHED                                                                        docker:default
+ => [ashupycode internal] load build definition from Dockerfile                                                   0.1s
+ => => transferring dockerfile: 309B                                                                              0.0s
+ => [ashupycode internal] load .dockerignore                                                                      0.1s
+ => => transferring context: 2B                                                                                   0.0s
+ => [ashupycode internal] load metadata for docker.io/library/python:latest                                       0.0s
+ => [ashupycode 1/3] FROM docker.io/library/python                                                                0.2s
+ => [ashupycode internal] load build context                                                                      0.1s
+ => => transferring context: 331B                                                                                 0.0s
+ => [ashupycode 2/3] RUN mkdir /ashucode                                                                          1.4s
+ => [ashupycode 3/3] COPY *.py /ashucode/                                                                         0.3s
+ => [ashupycode] exporting to image                                                                               0.2s
+ => => exporting layers                                                                                           0.1s
+ => => writing image sha256:2614ac3b80fd37962085bd533756efaae7364f5edafb9c29c9d8bf37561b6363                      0.0s
+ => => naming to docker.io/library/ashupython:v1                                                                  0.0s
+[+] Running 2/2
+ ✔ Network pythoncode_default  Created                                                                            0.5s 
+ ✔ Container ashuc123          Started    
+```
+
+### checking it 
+
+```
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  up -d  
+WARN[0000] /home/ashu/ashu-java-spark/ashu-pythoncode/compose.yaml: `version` is obsolete 
+[+] Running 2/2
+ ✔ Network ashu-pythoncode_default  Created                                                                       0.1s 
+ ✔ Container ashuc123               Started                                                                       0.0s 
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  ps
+WARN[0000] /home/ashu/ashu-java-spark/ashu-pythoncode/compose.yaml: `version` is obsolete 
+NAME       IMAGE           COMMAND                  SERVICE      CREATED          STATUS          PORTS
+ashuc123   ashupython:v1   "python /ashucode/he…"   ashupycode   19 seconds ago   Up 17 seconds   
+[ashu@ip-172-31-95-164 pythoncode]$ 
+
+
+```
+
+
+### rebuild 
+
+```
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  up -d  --build  ^C
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  ps
+WARN[0000] /home/ashu/ashu-java-spark/ashu-pythoncode/compose.yaml: `version` is obsolete 
+NAME       IMAGE           COMMAND                  SERVICE      CREATED          STATUS         PORTS
+ashuc123   ashupython:v1   "python /ashucode/he…"   ashupycode   20 seconds ago   Up 9 seconds   
+[ashu@ip-172-31-95-164 pythoncode]$ docker-compose  logs ashupycode
+WARN[0000] /home/ashu/ashu-java-spark/ashu-pythoncode/compose.yaml: `version` is obsolete 
+ashuc123  | Hello ALL from JPMC HyD 
+```
+
+
 
 
