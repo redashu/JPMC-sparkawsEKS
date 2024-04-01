@@ -128,4 +128,64 @@ f80506110195   openjdk   "jshell"    18 seconds ago   Up 18 seconds             
 
 <img src="br.png">
 
+### hello.py 
+
+```
+import time
+while True:
+    print("Hello ALL from JPMC ")
+    time.sleep(2)
+    print("Oh now i m python Developer ")
+```
+
+### image build 
+
+```
+[ashu@ip-172-31-95-164 ashu-java-spark]$ ls
+javacode  pythoncode  sparkcode
+[ashu@ip-172-31-95-164 ashu-java-spark]$ docker  build  -t   ashupython:codev1  pythoncode/ 
+Sending build context to Docker daemon  4.096kB
+Step 1/4 : FROM python
+ ---> 6cbe1053f244
+Step 2/4 : RUN mkdir /ashucode
+ ---> Running in 9a8156613b73
+Removing intermediate container 9a8156613b73
+ ---> 9555b8e58811
+Step 3/4 : COPY *.py /ashucode/
+ ---> 42c689bdf775
+Step 4/4 : CMD ["python","/ashucode/hello.py"]
+ ---> Running in 3a27256dce94
+Removing intermediate container 3a27256dce94
+ ---> 963f1f804217
+Successfully built 963f1f804217
+Successfully tagged ashupython:codev1
+```
+
+### creating contaienr 
+
+```
+[ashu@ip-172-31-95-164 ashu-java-spark]$ docker  run  --name ashutest1  -itd  ashupython:codev1 
+4618c6722c33ca3d37c3f47e1e40409e5d6509a352449905e6389d30f99b4c00
+[ashu@ip-172-31-95-164 ashu-java-spark]$ docker ps
+CONTAINER ID   IMAGE               COMMAND                  CREATED         STATUS         PORTS     NAMES
+4618c6722c33   ashupython:codev1   "python /ashucode/he…"   5 seconds ago   Up 4 seconds             ashutest1
+[ashu@ip-172-31-95-164 ashu-java-spark]$ 
+
+```
+
+### checking logs 
+
+```
+root@ip-172-31-95-164 ~]# docker  logs   ashutest1  
+Hello ALL from JPMC 
+Oh now i m python Developer 
+Hello ALL from JPMC 
+Oh now i m python Developer 
+
+```
+
+### compose intro 
+
+<img src="com1.png">
+
 
