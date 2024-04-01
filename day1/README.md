@@ -354,4 +354,18 @@ ashujc123   ashujava:imgv1   "java hello"             ashujavaapp   13 seconds a
 [ashu@ip-172-31-95-164 pythoncode]$ 
 ```
 
+### Intro to k8s 
+
+<img src="k8s1.png">
+
+### control plane 
+
+<img src="k8s2.png">
+
+###  artifacts server 
+
+<img src="repo.png">
+
+
+
 
