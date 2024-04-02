@@ -149,8 +149,125 @@ pod "nagapod1" deleted
 pod "neelupod1" deleted
 ```
 
-###
+### incase code changes then 
+
+```
+  docker-compose up -d --build 
+  202  history 
+  203  docker-compose images
+  204  docker  tag  ashujava:imgv1  docker.io/dockerashu/ashujava:imgv2
+  205  docker login 
+  206  docker push docker.io/dockerashu/ashujava:imgv2
+  207  history 
+  208  cd ../eks-manifest/
+  209  ls
+  210  kubectl  create -f  ashupod2.yml 
+  211  kubectl  get po 
+  212  history 
+```
+
+### Introduction to deployment controller 
+
+<img src="dep1.png">
+
+### Creating pod file using kubectl 
+
+```
+ashu@ip-172-31-95-164 ~]$ kubectl  run   ashupod3  --image=docker.io/dockerashu/ashujava:imgv2  --dry-run=client  -o yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ashupod3
+  name: ashupod3
+spec:
+  containers:
+  - image: docker.io/dockerashu/ashujava:imgv2
+    name: ashupod3
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+[ashu@ip-172-31-95-164 ~]$ kubectl  run   ashupod3  --image=docker.io/dockerashu/ashujava:imgv2  --dry-run=client  -o yaml  >pod1.yaml
+[ashu@ip-172-31-95-164 ~]$ ls
+~  ashu-java-spark  cluster.yaml  config  pod1.yaml
+[ashu@ip-172-31-95-164 ~]$ 
 
 
+======>>
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  run   ashupod3  --image=docker.io/dockerashu/ashujava:imgv2  --dry-run=client  -o yaml   >ashunewfile.yml
+[ashu@ip-172-31-95-164 eks-manifest]$ ls
+ashujavapod.yaml  ashunewfile.yml  ashupod2.yml
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create -f  ashunewfile.yml 
+pod/ashupod3 created
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get po 
+NAME       READY   STATUS    RESTARTS   AGE
+ashupod3   1/1     Running   0          3s
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl delete -f ashunewfile.yml 
+pod "ashupod3" deleted
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+```
+
+### Creating deployment manifest 
+
+```
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create   deployment   ashudeploy1  --image=docker.io/dockerashu/ashujava:imgv2 --dry-run=client    -o yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashudeploy1
+  name: ashudeploy1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashudeploy1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashudeploy1
+    spec:
+      containers:
+      - image: docker.io/dockerashu/ashujava:imgv2
+        name: ashujava
+        resources: {}
+status: {}
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create   deployment   ashudeploy1  --image=docker.io/dockerashu/ashujava:imgv2 --dry-run=client    -o yaml   >ashu_deploy.yaml 
+```
+
+### update 
+
+```
+apiVersion: apps/v1 # new api version 
+kind: Deployment # deployment controller 
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashudeploy1
+  name: ashudeploy1 # name of deployment 
+spec:
+  replicas: 1 # number of pods we want 
+  selector:
+    matchLabels:
+      app: ashudeploy1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashudeploy1
+    spec:
+      containers:
+      - image: docker.io/dockerashu/ashujava:imgv2 # docker image 
+        name: ashujava # name of container 
+        resources: {}
+status: {}
+
+```
 
 
