@@ -386,3 +386,23 @@ services:
     build: . 
     container_name: ashuwebc1 
 ```
+
+
+### creating de0loy 
+
+```
+ashu@ip-172-31-95-164 ashu-java-spark]$ ls
+ashu-pythoncode  ashu-webapp  eks-manifest  javacode  sparkcode
+[ashu@ip-172-31-95-164 ashu-java-spark]$ cd  eks-manifest/
+[ashu@ip-172-31-95-164 eks-manifest]$ ls
+ashu_deploy.yaml  ashujavapod.yaml  ashunewfile.yml  ashupod2.yml
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create  deployment  ashuwebapp --image=docker.io/dockerashu/ashujpmc:webv1  --port 80       --dry-run=client -o yaml  >webdeploy.yaml 
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create  -f webdeploy.yaml 
+deployment.apps/ashuwebapp created
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  deploy 
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashuwebapp   1/1     1            1           4s
+klnwebapp    0/1     1            0           1s
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+
+```
