@@ -42,5 +42,26 @@ c591c838739a: Pushed
 imgv1: digest: sha256:a0243757199236d89d7a68acc59613eedfe6242dc8b5f0bdef9ee65020f900f4 size: 1781
 ```
 
+### How to setuP EKS 
+
+<img src="eks1.png">
+
+### to connect any K8S cluster (control plane) -- we need kubectl 
+
+```
+[ashu@ip-172-31-95-164 ashu-pythoncode]$ kubectl  version --client 
+Client Version: v1.29.3
+Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
+```
+
+### for any OS  aws and EKS cred location 
+
+<img src="eks22.png">
+
+### introduction to POd in k8s 
+
+<img src="pod1.png">
+
+
 
 
