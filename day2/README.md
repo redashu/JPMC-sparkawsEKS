@@ -95,6 +95,51 @@ serverVersion:
   platform: linux/amd64
 ```
 
+### pod manifest 
+
+```
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: ashupod1 
+spec:  # under spec we put all pods component like storage , secu , containers etc
+  containers: 
+  - name: ashuc1
+    image: docker.io/dockerashu/ashujava:imgv1 # image from docker hub 
+    tty: True 
+```
+
+### sending create request
+
+```
+[ashu@ip-172-31-95-164 ashu-java-spark]$ ls
+ashu-pythoncode  eks-manifest  javacode  sparkcode
+[ashu@ip-172-31-95-164 ashu-java-spark]$ cd eks-manifest/
+[ashu@ip-172-31-95-164 eks-manifest]$ ls
+ashujavapod.yaml
+
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl   create  -f   ashujavapod.yaml  
+pod/ashupod1 created
+
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  pods
+NAME             READY   STATUS         RESTARTS   AGE
+ashupod1         1/1     Running        0          32s
+```
+
+
+### we can check output of pods 
+
+```
+[ashu@ip-172-31-95-164 ~]$ kubectl   logs  ashupod1 
+```
+
+### deleting pod 
+
+```
+ 191  kubectl   delete  -f  ashujavapod.yaml 
+  192  kubectl  get  po 
+  193  kubectl  delete  pod  poojapod1
+```
 
 
 
