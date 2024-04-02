@@ -270,4 +270,119 @@ status: {}
 
 ```
 
+### creating it
 
+```
+ashu@ip-172-31-95-164 eks-manifest]$ ls
+ashu_deploy.yaml  ashujavapod.yaml  ashunewfile.yml  ashupod2.yml
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create  -f  ashu_deploy.yaml  
+deployment.apps/ashudeploy1 created
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl   get  deployment 
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+ashudeploy1   1/1     1            1           7s
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+
+```
+
+### update deployment manifest 
+
+```
+apiVersion: apps/v1 # new api version 
+kind: Deployment # deployment controller 
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashudeploy1
+  name: ashudeploy1 # name of deployment 
+spec:
+  replicas: 2 # number of pods we want 
+  selector:
+    matchLabels:
+      app: ashudeploy1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashudeploy1
+    spec:
+      containers:
+      - image: docker.io/dockerashu/ashujava:imgv2 # docker image 
+        name: ashujava # name of container 
+        resources: {}
+status: {}
+
+```
+
+### apply it 
+
+```
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl apply  -f ashu_deploy.yaml 
+deployment.apps/ashudeploy1 configured
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  deploy 
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+ashudeploy1      2/2     2            2           32m
+```
+
+### scaling using kubectl 
+
+```
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  scale  deployment ashudeploy1  --replicas=3
+deployment.apps/ashudeploy1 scaled
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  deploy   | grep ashu
+ashudeploy1        3/3     3            3           45m
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  scale  deployment ashudeploy1  --replicas=1
+deployment.apps/ashudeploy1 scaled
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  deploy   | grep ashu
+ashudeploy1        1/1     1            1           45m
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  scale  deployment ashudeploy1  --replicas=0
+deployment.apps/ashudeploy1 scaled
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  deploy   | grep ashu
+ashudeploy1        0/3     3            0           45m
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  scale  deployment ashudeploy1  --replicas=1
+deployment.apps/ashudeploy1 scaled
+```
+
+### CNi in k8s 
+
+<img src="cni.png">
+
+### html code 
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ashu</title>
+</head>
+<body>
+    <h1> Hello ashutoshh </h1>
+    <h2> type below </h2>
+    <input>
+    
+</body>
+</html>
+```
+
+### Dockerfile 
+
+```
+FROM nginx 
+COPY ashu.html /usr/share/nginx/html/index.html 
+#  ngnix --- nginx -- Engine X 
+
+```
+
+### compose
+
+```
+version: '3.8'
+services:
+  ashu-uiapp:
+    image: ashujpmc:webv1 
+    build: . 
+    container_name: ashuwebc1 
+```
