@@ -63,5 +63,40 @@ Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3
 <img src="pod1.png">
 
 
+### testing control connection from kubectl 
+
+```
+ashu@ip-172-31-95-164 ~]$ kubectl  cluster-info 
+Kubernetes control plane is running at https://F7F7ADBD02A3EC954AC1040B0F5D09F4.gr7.us-east-1.eks.amazonaws.com
+CoreDNS is running at https://F7F7ADBD02A3EC954AC1040B0F5D09F4.gr7.us-east-1.eks.amazonaws.com/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+
+=====>>
+[ashu@ip-172-31-95-164 ~]$ kubectl  version -o yaml 
+clientVersion:
+  buildDate: "2022-04-14T08:49:13Z"
+  compiler: gc
+  gitCommit: ad3338546da947756e8a88aa6822e9c11e7eac22
+  gitTreeState: clean
+  gitVersion: v1.23.6
+  goVersion: go1.17.9
+  major: "1"
+  minor: "23"
+  platform: linux/amd64
+serverVersion:
+  buildDate: "2024-03-02T03:46:53Z"
+  compiler: gc
+  gitCommit: f19f83c16ca534237fbfb65bc580d51752b98c91
+  gitTreeState: clean
+  gitVersion: v1.27.11-eks-b9c9ed7
+  goVersion: go1.21.7
+  major: "1"
+  minor: 27+
+  platform: linux/amd64
+```
+
+
+
+
 
 
