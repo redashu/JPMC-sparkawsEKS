@@ -406,3 +406,98 @@ klnwebapp    0/1     1            0           1s
 [ashu@ip-172-31-95-164 eks-manifest]$ 
 
 ```
+
+### Describe pod 
+
+```
+ashu@ip-172-31-95-164 eks-manifest]$ kubectl  describe pod  ashuwebapp-849dccc694-dkqjb
+Name:         ashuwebapp-849dccc694-dkqjb
+Namespace:    default
+Priority:     0
+Node:         ip-192-168-44-74.ec2.internal/192.168.44.74
+Start Time:   Tue, 02 Apr 2024 11:18:10 +0000
+Labels:       app=ashuwebapp
+              pod-template-hash=849dccc694
+Annotations:  <none>
+Status:       Running
+IP:           192.168.36.70
+IPs:
+  IP:           192.168.36.70
+Controlled By:  ReplicaSet/ashuwebapp-849dccc694
+Containers:
+  ashujpmc:
+    Container ID:   containerd://d32ec794ba30a469c61a5176c8f77e03b5e2b02cbeb71295d8a7acf544eb7dfb
+    Image:          docker.io/dockerashu/ashujpmc:webv1
+    Image ID:       docker.io/dockerashu/ashujpmc@sha256:2e1334b8d4465ef06d7abcebfffa53cb7a8b5b79322cfe2ab6bfa3005286fbb8
+    Port:           80/TCP
+    Host Port:      0/TCP
+    State:          Running
+```
+
+### access container inside pod 
+
+```
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  exec -it  web-client  -- sh  
+/ # 
+/ # 
+/ # curl  http://192.168.36.70  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ashu</title>
+</head>
+<body>
+    <h1> Hello ashutoshh </h1>
+    <h2> type below </h2>
+    <input>
+    
+</body>
+</html>/ # exit
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+
+```
+
+### Introduction to service in K8s 
+
+<img src="svc1.png">
+
+### type of service 
+
+```
+Available Commands:
+  clusterip    Create a ClusterIP service
+  externalname Create an ExternalName service
+  loadbalancer Create a LoadBalancer service
+  nodeport     Create a NodePort service
+
+```
+
+### Creating service 
+
+```
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl   get  deploy    ashuwebapp
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+ashuwebapp   2/2     2            2           39m
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  expose  deployment  ashuwebapp  --type ClusterIP --port 80 --name ashu-internal-lb --dry-run=client -o yaml  >svc_local.yaml
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create  -f  svc_local.yaml 
+service/ashu-internal-lb created
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  get  service 
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+ashu-internal-lb   ClusterIP   10.100.146.10   <none>        80/TCP    6s
+kubernetes         ClusterIP   10.100.0.1      <none>        443/TCP   42m
+[ashu@ip-172-31-95-164 eks-manifest]$ 
+
+
+```
+
+
+
+
+
+
+
