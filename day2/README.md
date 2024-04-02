@@ -139,8 +139,17 @@ ashupod1         1/1     Running        0          32s
  191  kubectl   delete  -f  ashujavapod.yaml 
   192  kubectl  get  po 
   193  kubectl  delete  pod  poojapod1
+
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  delete  pods --all
+pod "avinashpod1" deleted
+pod "humerapod1" deleted
+pod "klnpod1" deleted
+pod "manapod1" deleted
+pod "nagapod1" deleted
+pod "neelupod1" deleted
 ```
 
+###
 
 
 
