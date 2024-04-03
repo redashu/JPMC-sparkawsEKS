@@ -188,5 +188,114 @@ ashusparkc1   docker.io/dockerashu/spark:v1   "bash"    ashu-spark-sdk   12 seco
 ### accessing spark 
 
 ```
+ashu@ip-172-31-95-164 ashu-spark]$ docker-compose  ps
+WARN[0000] /home/ashu/ashu-java-spark/ashu-spark/compose.yml: `version` is obsolete 
+NAME          IMAGE                                                                     COMMAND                  SERVICE          CREATED         STATUS         PORTS
+ashusparkc1   sha256:7dc30c94707933d5958bd2ff7cd7917ad7994c38ab8342ef59b067714ef237ad   "/opt/bitnami/script…"   ashu-spark-sdk   7 minutes ago   Up 7 minutes
+
+
+[ashu@ip-172-31-95-164 ashu-spark]$ docker-compose  exec -it  ashu-spark-sdk  bash 
+WARN[0000] /home/ashu/ashu-java-spark/ashu-spark/compose.yml: `version` is obsolete 
+I have no name!@cfcfd1662194:/opt/bitnami/spark$ 
+I have no name!@cfcfd1662194:/opt/bitnami/spark$ java --version 
+openjdk 17.0.10 2024-01-16 LTS
+OpenJDK Runtime Environment (build 17.0.10+13-LTS)
+OpenJDK 64-Bit Server VM (build 17.0.10+13-LTS, mixed mode, sharing)
+I have no name!@cfcfd1662194:/opt/bitnami/spark$ 
 
 ```
+
+### start spark shell
+
+```
+I have no name!@cfcfd1662194:/opt/bitnami/spark$ spark-shell 
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+24/04/03 09:30:47 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Spark context Web UI available at http://cfcfd1662194:4040
+Spark context available as 'sc' (master = local[*], app id = local-1712136649737).
+Spark session available as 'spark'.
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /___/ .__/\_,_/_/ /_/\_\   version 3.5.1
+      /_/
+         
+Using Scala version 2.12.18 (OpenJDK 64-Bit Server VM, Java 17.0.10)
+Type in expressions to have them evaluated.
+Type :help for more information.
+```
+
+### spark connection with tools 
+
+<img src="tools.png">
+
+### loging 
+
+```
+[ashu@ip-172-31-95-164 ashu-spark]$ docker-compose  exec -it  ashu-spark-sdk  bash 
+WARN[0000] /home/ashu/ashu-java-spark/ashu-spark/compose.yml: `version` is obsolete 
+I have no name!@348fb7e971ae:/opt/bitnami/spark/datasets$ 
+I have no name!@348fb7e971ae:/opt/bitnami/spark/datasets$ pwd
+/opt/bitnami/spark/datasets
+I have no name!@348fb7e971ae:/opt/bitnami/spark/datasets$ ls
+com.csv
+```
+
+### reading csvfile
+
+```
+
+scala> val rdd1 = sc.textFile("com.csv")
+rdd1: org.apache.spark.rdd.RDD[String] = com.csv MapPartitionsRDD[1] at textFile at <console>:23
+
+scala> rdd1.first()
+res0: String = Name,Department,Manager,Salary
+
+scala> rdd1.collect
+collect   collectAsync
+
+scala> rdd1.collect()
+res1: Array[String] = Array(Name,Department,Manager,Salary, Robin Hood,,,200, Arsene Wenger,Bar,Friar Tuck,50, Friar Tuck,Foo,Robin Hood,100, Little John,Foo,Robin Hood,100, Sam Allardyce,,,250, Dimi Berbatov,Foo,Little John,50)
+
+```
+
+### deploy spark in kubernetes 
+
+```
+kubectl create  deployment  spark-system  --image=docker.io/dockerashu/spark:v1  --port 8080 --dry-run=client  -o yaml  >spark.yaml
+
+====
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl  create -f spark.yaml 
+deployment.apps/spark-system created
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl   get  deploy -n common 
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+spark-system   0/1     1            0           8s
+[ashu@ip-172-31-95-164 ashu-java-spark]$ 
+
+
+```
+
+### creating cluster ip servcie
+
+```
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl   get  deploy -n common 
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+spark-system   1/1     1            1           3m14s
+[ashu@ip-172-31-95-164 ashu-java-spark]$ 
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl  expose  deployment spark-system  --type ClusterIP --port 8080 --name ashulb1 --namespace       common  --dry-run=client -o yaml >svc1.yaml 
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl create -f svc1.yaml 
+service/ashulb1 created
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl  get  svc -n common 
+NAME      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+ashulb1   ClusterIP   10.100.4.159   <none>        8080/TCP   7s
+[ashu@ip-172-31-95-164 ashu-java-spark]$ 
+
+
+```
+
+### check ingress URL 
+
+[click_here](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
