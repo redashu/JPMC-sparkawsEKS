@@ -1,6 +1,6 @@
 # JPMC-sparkawsEKS
 
-### plan 
+### EKS more info 
 
-<img src="plan.png">
+<img src="eks1.png">
 
