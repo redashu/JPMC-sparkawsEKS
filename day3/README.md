@@ -299,3 +299,46 @@ ashulb1   ClusterIP   10.100.4.159   <none>        8080/TCP   7s
 
 [click_here](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
+### ingress routing rule manifest 
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: common  # change
+  name: ashu-rule # change 
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx # change 
+  rules:
+  - host: ashuspark.adhocnet.org  # change  
+    http:
+      paths:
+      - path: /  # change 
+        pathType: Prefix
+        backend:
+          service:
+            name: ashulb1 # my clusterIP service name 
+            port:
+              number: 8080 # port of my service 
+
+```
+
+### deployit 
+
+```
+ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl create -f ingressrule.yaml 
+ingress.networking.k8s.io/ashu-rule created
+[ashu@ip-172-31-95-164 ashu-java-spark]$ kubectl  get  ing  -n  common 
+NAME           CLASS   HOSTS                         ADDRESS                                                                         PORTS   AGE
+ashu-rule      nginx   ashuspark.adhocnet.org                                                                                        80      38s
+avinash-rule   nginx   avinash.adhocnet.org          acf1af9679cd341b1942714b5ad310b3-d6b805fd7b146f0e.elb.us-east-1.amazonaws.com   80      27m
+komal-rule     nginx   komalspark.adhocnet.org                                                                                       80      31s
+navs-rule      nginx   navspark.adhocnet.org                                                                                         80      21s
+prasad-rule    nginx   saiprasadspark.adhocnet.org                                                                                   80      6s
+rs-rule        nginx   rsspark.adhocnet.org                                                                                          80      3s
+uady-rule      nginx   udaypark.adhocnet.org                                                                                         80      16s
+[ashu@ip-172-31-95-164 ashu-java-spark]$ 
+```
+
