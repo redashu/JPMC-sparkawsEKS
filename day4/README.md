@@ -199,3 +199,15 @@ spec:
 status: {}
 
 ```
+### Creating spark master Internal LB 
+
+```
+kubectl   expose  deployment  ashu-spark-master  --type ClusterIP --port 7077 --name spark-master-lb  --namespace  common --dry-run=client -o yaml  >sparkmaster-svc.yaml
+[ashu@ip-172-31-95-164 eks-manifest]$ kubectl  create -f sparkmaster-svc.yaml 
+```
+
+### spark on EKS 
+<img src="eksspark.png">
+
+
+
