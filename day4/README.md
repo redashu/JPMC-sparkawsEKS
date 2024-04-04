@@ -96,3 +96,106 @@ RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VER
 ```
  docker build -t  dockerashu/spark:3.5.1 . 
 ```
+
+
+### Spark in K8s 
+
+### creating master deployment 
+
+```
+kubectl  create  deployment ashu-spark-master --image=docker.io/dockerashu/spark:v1   --port 8080 --namespace common  --dry-run=client  -o yaml  >spark_master_deploy.yaml
+```
+
+### creating worker 
+
+```
+kubectl  create  deployment ashu-spark-worker --image=docker.io/dockerashu/spark:v1  --namespace common  --dry-run=client  -o yaml
+```
+
+### master file
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-spark-master
+  name: ashu-spark-master
+  namespace: common
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-spark-master
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-spark-master
+    spec:
+      containers:
+      - image: docker.io/dockerashu/spark:v1
+        name: spark
+        ports:
+        - containerPort: 8080
+        env: # calling env of docker image
+        - name: SPARK_MODE
+          value: master # this pod will run as spark master 
+        # - name: SPARK_MASTER_URL # not for spark master 
+        #   value: spark://spark-master-lb:7077 
+        resources: 
+          requests:
+            memory: 200M 
+            cpu: 200m
+          limits:
+            memory: 600M
+            cpu: 300m 
+status: {}
+
+```
+
+### worker file 
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-spark-master
+  name: ashu-spark-master
+  namespace: common
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-spark-master
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-spark-master
+    spec:
+      containers:
+      - image: docker.io/dockerashu/spark:v1
+        name: spark
+        ports:
+        - containerPort: 8080
+        env: # calling env of docker image
+        - name: SPARK_MODE
+          value: woker # this pod will run as spark master 
+         - name: SPARK_MASTER_URL # not for spark master 
+         value: spark://spark-master-lb:7077 
+        resources: 
+          requests:
+            memory: 200M 
+            cpu: 200m
+          limits:
+            memory: 600M
+            cpu: 300m 
+status: {}
+
+```
