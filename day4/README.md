@@ -209,5 +209,9 @@ kubectl   expose  deployment  ashu-spark-master  --type ClusterIP --port 7077 --
 ### spark on EKS 
 <img src="eksspark.png">
 
+### working with java 
+
+<img src="java1.png">
+
 
 
