@@ -206,4 +206,78 @@ classes                    generated-test-sources  maven-status    test-classes
 
 <img src="sts1.png">
 
+### spark SQL -- using spark-shell
+
+```
+ala> val  rdd1 =   sc.parallelize(1 to 10 )
+rdd1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at <console>:23
+
+scala> val rdd2 = rdd1.map(x => (x," is my id "))
+rdd2: org.apache.spark.rdd.RDD[(Int, String)] = MapPartitionsRDD[1] at map at <console>:23
+
+scala> val  df = rdd2.toDF("id","my_details")
+df: org.apache.spark.sql.DataFrame = [id: int, my_details: string]
+
+scala> df.printSchema
+   def printSchema(level: Int): Unit   def printSchema(): Unit
+
+scala> df.printSchema
+   def printSchema(level: Int): Unit   def printSchema(): Unit
+
+scala> df.printSchema
+root
+ |-- id: integer (nullable = false)
+ |-- my_details: string (nullable = true)
+
+
+```
+
+### spark sql 
+
+```
+val  rdd1 =   sc.parallelize(1 to 10 )
+rdd1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[0] at parallelize at <console>:23
+
+scala> val rdd2 = rdd1.map(x => (x," is my id "))
+rdd2: org.apache.spark.rdd.RDD[(Int, String)] = MapPartitionsRDD[1] at map at <console>:23
+
+scala> val  df = rdd2.toDF("id","my_details")
+df: org.apache.spark.sql.DataFrame = [id: int, my_details: string]
+
+scala> df.createOrReplaceTempView("people")
+
+scala> val sqlDF = spark.sql("SELECT * FROM people")
+sqlDF: org.apache.spark.sql.DataFrame = [id: int, my_details: string]
+
+scala> sqlDF.show()
++---+----------+
+| id|my_details|
++---+----------+
+|  1| is my id |
+|  2| is my id |
+|  3| is my id |
+|  4| is my id |
+|  5| is my id |
+|  6| is my id |
+|  7| is my id |
+|  8| is my id |
+|  9| is my id |
+| 10| is my id |
++---+----------+
+
+
+scala> val sqlDF = spark.sql("SELECT id  FROM people")
+sqlDF: org.apache.spark.sql.DataFrame = [id: int]
+
+scala> sqlDF.show()
++---+
+| id|
++---+
+|  1|
+|  2|
+|  3|
+
+```
+
+
 
