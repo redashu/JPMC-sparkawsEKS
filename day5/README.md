@@ -135,3 +135,71 @@ spark-setup-worker   2/2     2m30s
 
 ```
 
+### COMpiling java code 
+
+```
+[ashu@ip-172-31-95-164 mydemo]$ ls
+pom.xml  src
+[ashu@ip-172-31-95-164 mydemo]$ mvn install  
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building ashudemo 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:resources (default-resources) @ ashudemo ---
+[debug] execute contextualize
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 0 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ ashudemo ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 2 source files to /home/ashu/ashu-java-spark/mydemo/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.5:testResources (default-testResources) @ ashudemo ---
+[debug] execute contextualize
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /home/ashu/ashu-java-spark/mydemo/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ ashudemo ---
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.10:test (default-test) @ ashudemo ---
+[INFO] Surefire report directory: /home/ashu/ashu-java-spark/mydemo/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+
+Results :
+
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.3.2:jar (default-jar) @ ashudemo ---
+[INFO] Building jar: /home/ashu/ashu-java-spark/mydemo/target/ashudemo-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ ashudemo ---
+[INFO] Installing /home/ashu/ashu-java-spark/mydemo/target/ashudemo-1.0-SNAPSHOT.jar to /home/ashu/.m2/repository/com/example/ashudemo/1.0-SNAPSHOT/ashudemo-1.0-SNAPSHOT.jar
+[INFO] Installing /home/ashu/ashu-java-spark/mydemo/pom.xml to /home/ashu/.m2/repository/com/example/ashudemo/1.0-SNAPSHOT/ashudemo-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 33.422s
+[INFO] Finished at: Fri Apr 05 06:39:05 UTC 2024
+[INFO] Final Memory: 49M/200M
+[INFO] ------------------------------------------------------------------------
+[ashu@ip-172-31-95-164 mydemo]$ ls
+pom.xml  src  target
+[ashu@ip-172-31-95-164 mydemo]$ ls  target/
+ashudemo-1.0-SNAPSHOT.jar  generated-sources       maven-archiver  surefire
+classes                    generated-test-sources  maven-status    test-classes
+```
+
+### Spark job submission modes 
+
+<img src="modes.png">
+
+
