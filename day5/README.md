@@ -202,4 +202,8 @@ classes                    generated-test-sources  maven-status    test-classes
 
 <img src="modes.png">
 
+### Statefulsets
+
+<img src="sts1.png">
+
 
