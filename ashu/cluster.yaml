@@ -1,0 +1,22 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: jpmc-cluster
+  region: us-east-1
+  version: "1.27"
+
+nodeGroups:
+  - name: nodepool-1
+    instanceType: m5.large
+    desiredCapacity: 2
+    volumeSize: 200
+    ssh:
+      allow: true 
+      publicKeyPath: /Users/humanfirmware/.ssh/id_rsa.pub
+    scalingConfig:
+      minSize: 1
+      maxSize: 5
+      desiredCapacity: 2
+      labels:
+        eks.amazonaws.com/nodegroup: nodepool-1

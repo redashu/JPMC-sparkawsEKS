@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: common  # change
+  name: ashu-rule-spark # change 
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx # change 
+  rules:
+  - host: sparkui.adhocnet.org  # change  
+    http:
+      paths:
+      - path: /  # change 
+        pathType: Prefix
+        backend:
+          service:
+            name: spark-setup-master-svc # my clusterIP service name 
+            port:
+              number: 80 # port of my service 

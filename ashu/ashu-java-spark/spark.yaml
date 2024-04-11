@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: common # namespace info 
+  creationTimestamp: null
+  labels:
+    app: spark-system
+  name: spark-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-system
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spark-system
+    spec:
+      containers:
+      - image: docker.io/dockerashu/spark:v1
+        name: spark
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 200M 
+            cpu: 200m # 200 mili core to get it started 
+          limits:
+            memory: 700M
+            cpu: 500m 
+status: {}

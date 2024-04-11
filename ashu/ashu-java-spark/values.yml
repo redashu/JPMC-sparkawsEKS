@@ -1,0 +1,6 @@
+image:
+  registry: docker.io
+  repository: dockerashu/ashujpmc
+  tag: webv1
+
+

@@ -1,0 +1,14 @@
+version:  "3.8"
+services: 
+  ashujavaapp: 
+    image: ashujava:imgv1 
+    build: 
+      context: . # location of dockerfile 
+      dockerfile: ashujava.dockerfile  # name of dockerfile 
+    container_name: ashujc123
+    tty: true 
+  ashupycode: 
+    image: ashupython:v1 # name of docker image to build
+    build: .  # location of Dockerfile 
+    container_name: ashuc123 # name of container 
+    tty: true # giving interactive terminal option

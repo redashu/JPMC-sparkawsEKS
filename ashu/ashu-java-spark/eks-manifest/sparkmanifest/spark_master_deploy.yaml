@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashu-spark-master
+  name: ashu-spark-master
+  namespace: common
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ashu-spark-master
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ashu-spark-master
+    spec:
+      containers:
+      - image: docker.io/bitnami/spark:3.5
+        name: spark
+        ports:
+        - containerPort: 8080
+        env: # calling env of docker image
+        - name: SPARK_MODE
+          value: master # this pod will run as spark master 
+        - name: SPARK_USER
+          value: spark # this pod will run as spark master 
+status: {}

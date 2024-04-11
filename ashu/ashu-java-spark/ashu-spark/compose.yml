@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  ashu-spark-sdk:
+    image: docker.io/dockerashu/spark:v1 
+    build: .
+    container_name: ashusparkc1
+    tty: True 

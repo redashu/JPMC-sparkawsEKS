@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  ashu-uiapp:
+    image: docker.io/dockerashu/ashujpmc:webv1 
+    build: . 
+    container_name: ashuwebc1 
+    ports:
+    - 1234:80 # left side you can use 1024 to 60000 
